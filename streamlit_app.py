@@ -12,8 +12,6 @@ def generate_llama3_response(prompt_input, system_prompt_ane):
                 "prompt": f"[INST] <<SYS>>\n{system_prompt_ane}\n<</SYS>>\n\n{prompt_input} [/INST]",
                 "temperature": 0.7,
                 "top_p": 0.9,
-                "max_new_tokens": 500,
-                "min_new_tokens": 100,
                 "repetition_penalty": 1.1
             }
         )
@@ -74,13 +72,21 @@ def main():
     contexto = st.sidebar.text_area("Descreva o contexto para as questões")
 
     prompt_template = """
-    Crie 10 questões de múltipla escolha para alunos do {ano} ano, na unidade temática de {unidade_tematica}, abordando o seguinte objeto de conhecimento: {objeto_conhecimento}. 
-    Contexto: {contexto}
-    As questões devem ser desafiadoras e promover uma compreensão formativa do conteúdo. Siga as seguintes diretrizes:
+    Tarefa 1 - Geração de Questão de Matemática:
+    "Por favor, gere uma questão de matemática para alunos do {ano} ano, focada em {unidade_tematica}, que explore {objeto_conhecimento}. Inclua parâmetros variáveis para permitir ajustes na dificuldade da questão."
+    
+    Tarefa 2 - Solução Detalhada:
+    "Para a questão gerada anteriormente, forneça uma solução detalhada passo a passo, explicando cada etapa do processo de resolução da questão. Use uma linguagem clara e acessível para estudantes do {ano} ano."
+    
+    Tarefa 3 - Feedback Personalizado:
+    "Baseado em uma resposta hipotética de um estudante que cometeu um erro comum ao resolver a questão, forneça feedback construtivo. Explique o erro, sua correção e forneça dicas para evitar esse tipo de engano no futuro."
+    
+    Considerações:
     - Forneça uma breve introdução ou contexto para cada questão.
     - As alternativas devem ser plausíveis e desafiadoras.
     - Inclua a resposta correta e uma breve explicação sobre por que essa resposta está correta.
     - Certifique-se de que as questões estão alinhadas com o conteúdo esperado para o {ano} ano.
+    - Use formatação clara e consistente para apresentar as questões e respostas.
     """
 
     ane_prompt = prompt_template.format(
@@ -91,7 +97,7 @@ def main():
     )
 
     system_prompt_ane = """
-    Como um assistente de professor, você deve criar avaliações de alta qualidade que ajudem a promover uma compreensão profunda do conteúdo. Suas respostas devem ser precisas, claras e alinhadas com o contexto fornecido.
+    Como um assistente de professor, você deve criar avaliações de alta qualidade que ajudem a promover uma compreensão profunda do conteúdo. Suas respostas devem ser precisas, claras e alinhadas com o contexto fornecido. Utilize formatação Markdown para organizar as perguntas e respostas.
     """
 
     if st.sidebar.button('Gerar atividades'):
