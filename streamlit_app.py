@@ -76,9 +76,13 @@ def main():
     prompt_template = """
     Crie 10 questões de múltipla escolha para alunos do {ano} ano, na unidade temática de {unidade_tematica}, abordando o seguinte objeto de conhecimento: {objeto_conhecimento}. 
     Contexto: {contexto}
-    As questões devem ser desafiadoras e promover uma compreensão formativa do conteúdo. Forneça a resposta correta e uma breve explicação sobre por que essa resposta está correta.
+    As questões devem ser desafiadoras e promover uma compreensão formativa do conteúdo. Siga as seguintes diretrizes:
+    - Forneça uma breve introdução ou contexto para cada questão.
+    - As alternativas devem ser plausíveis e desafiadoras.
+    - Inclua a resposta correta e uma breve explicação sobre por que essa resposta está correta.
+    - Certifique-se de que as questões estão alinhadas com o conteúdo esperado para o {ano} ano.
     """
-    
+
     ane_prompt = prompt_template.format(
         ano=selected_ano,
         unidade_tematica=selected_unidades_tematicas,
