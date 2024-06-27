@@ -5,37 +5,44 @@ import os
 st.set_page_config(page_title="Nova Escola - Gerador de Avaliações de Matemática")
 
 def generate_llama3_response(prompt_input, system_prompt_ane):
-    output = replicate.run("meta/meta-llama-3-70b-instruct", 
-                           input={ "prompt": prompt_input,
-                                  "temperature": 0.1, "top_p": 1,
-                                  "debug": False,
-                                  "system_prompt": system_prompt_ane + "You are a helpful, respectful and honest assistant focused on creating high-quality math assessments. Always provide accurate and pedagogically sound questions. Ensure that your responses are safe and unbiased.\\\\n\\\\nIf a question does not make sense or is not factually coherent, explain why instead of providing incorrect information. If you don't know the answer to a question, please don't share false information.",
-                                  "max_new_tokens": 500,
-                                  "min_new_tokens": 100,
-                                  "prompt_template": "[INST] <<SYS>>\\\\n{system_prompt}\\\\n<</SYS>>\\\\n\\\\n{prompt} [/INST]",
-                                  "repetition_penalty": 1.15
-                                  })      
-    full_response = ''
-    for item in output:
-        full_response += item
-                  
-    return full_response
+    try:
+        output = replicate.run(
+            "meta/meta-llama-3-70b-instruct",
+            input={
+                "prompt": f"[INST] <<SYS>>\n{system_prompt_ane}\n<</SYS>>\n\n{prompt_input} [/INST]",
+                "temperature": 0.1,
+                "top_p": 1,
+                "max_new_tokens": 500,
+                "min_new_tokens": 100,
+                "repetition_penalty": 1.15
+            }
+        )
+        full_response = ''
+        for item in output:
+            full_response += item
+        return full_response
+    except replicate.exceptions.ReplicateError as e:
+        st.error(f"Erro ao gerar resposta: {str(e)}")
+        return None
 
 def main():
-    replicate_api = st.secrets['REPLICATE_API_TOKEN']
-    os.environ['REPLICATE_API_TOKEN'] = replicate_api
+    try:
+        replicate_api = st.secrets['REPLICATE_API_TOKEN']
+        os.environ['REPLICATE_API_TOKEN'] = replicate_api
+    except KeyError:
+        st.error("Replicate API token não encontrado. Adicione o token ao arquivo secrets.toml.")
+        return
     
     custom_css = """
       <style>
-          /* Style for the sidebar header */
           .sidebar-header {
-              background-color: #E32458; /* Red background color */
-              color: white; /* White text color */
-              padding: 20px; /* Add padding */
-              text-align: center; /* Center the text */
+              background-color: #E32458;
+              color: white;
+              padding: 20px;
+              text-align: center;
           }
           .sidebar .sidebar-content {
-              padding: 20px; /* Add padding to the sidebar content */
+              padding: 20px;
           }
       </style>
     """
@@ -95,7 +102,8 @@ def main():
     if st.sidebar.button('Gerar atividades'):
         with st.spinner("Gerando atividades..."):
             response = generate_llama3_response(ane_prompt, system_prompt_ane)
-            st.text(response)
+            if response:
+                st.text(response)
 
 if __name__ == "__main__":
     main()
