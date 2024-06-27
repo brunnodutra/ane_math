@@ -2,7 +2,7 @@ import streamlit as st
 import replicate
 import os
 
-st.set_page_config(page_title="Nova Escola - Gerador de Avaliações de Matemática")
+st.set_page_config(page_title="Gerador de Avaliações de Matemática", layout="wide")
 
 def generate_llama3_response(prompt_input, system_prompt_ane):
     try:
@@ -10,11 +10,11 @@ def generate_llama3_response(prompt_input, system_prompt_ane):
             "meta/meta-llama-3-70b-instruct",
             input={
                 "prompt": f"[INST] <<SYS>>\n{system_prompt_ane}\n<</SYS>>\n\n{prompt_input} [/INST]",
-                "temperature": 0.1,
-                "top_p": 1,
+                "temperature": 0.7,
+                "top_p": 0.9,
                 "max_new_tokens": 500,
                 "min_new_tokens": 100,
-                "repetition_penalty": 1.15
+                "repetition_penalty": 1.1
             }
         )
         full_response = ''
@@ -32,39 +32,16 @@ def main():
     except KeyError:
         st.error("Replicate API token não encontrado. Adicione o token ao arquivo secrets.toml.")
         return
-    
-    custom_css = """
-      <style>
-          .sidebar-header {
-              background-color: #E32458;
-              color: white;
-              padding: 20px;
-              text-align: center;
-          }
-          .sidebar .sidebar-content {
-              padding: 20px;
-          }
-      </style>
-    """
-    st.markdown(custom_css, unsafe_allow_html=True)
 
-    st.sidebar.markdown("<h1 class='sidebar-header'>Gerador de Avaliações</h1>", unsafe_allow_html=True)
-    
-    st.sidebar.markdown("## Selecione as opções para gerar a avaliação")
-    
+    st.sidebar.title("Gerador de Avaliações")
+    st.sidebar.subheader("Selecione as opções para gerar a avaliação")
+
     options_ano = ['6° ano', '7° ano', '8° ano', '9° ano']
     unidades_tematicas = {
         '6° ano': ['Números e operações', 'Álgebra', 'Geometria', 'Grandezas e medidas', 'Probabilidade e estatística'],
         '7° ano': ['Números e operações', 'Álgebra', 'Geometria', 'Grandezas e medidas', 'Probabilidade e estatística'],
         '8° ano': ['Números e operações', 'Álgebra', 'Geometria', 'Grandezas e medidas', 'Probabilidade e estatística'],
         '9° ano': ['Números e operações', 'Álgebra', 'Geometria', 'Grandezas e medidas', 'Probabilidade e estatística'],
-    }
-
-    link_planos_aula = {
-        '6° ano': ['https://novaescola.org.br/planos-de-aula/fundamental/6ano'],
-        '7° ano': ['https://novaescola.org.br/planos-de-aula/fundamental/7ano'],
-        '8° ano': ['https://novaescola.org.br/planos-de-aula/fundamental/8ano'],
-        '9° ano': ['https://novaescola.org.br/planos-de-aula/fundamental/9ano'],
     }
 
     objetos_conhecimento = {
@@ -91,19 +68,33 @@ def main():
 
     selected_ano = st.sidebar.selectbox("Ano", options_ano)
     selected_unidades_tematicas = st.sidebar.selectbox("Unidades temáticas", unidades_tematicas[selected_ano])
-    selected_link_planos_aula = link_planos_aula[selected_ano]
     index_objeto_conhecimento = f"{selected_ano}-{selected_unidades_tematicas}"
     selected_objeto_conhecimento = st.sidebar.selectbox("Objetos de conhecimento", objetos_conhecimento[index_objeto_conhecimento])
     
-    ane_prompt = f'Gerar 10 questões de múltipla escolha para o {selected_ano} com a Unidade temática {selected_unidades_tematicas} e objeto de conhecimento {selected_objeto_conhecimento}. Gerar toda a resposta em português BR.'
+    contexto = st.sidebar.text_area("Descreva o contexto para as questões")
 
-    system_prompt_ane = f"Como um assistente do professor de escola pública brasileira, gera uma atividade com 10 questões de múltipla escolha e indique a alternativa correta. As questões devem ser para o {selected_ano} do ensino fundamental sobre a unidade temática {selected_unidades_tematicas} com o objeto de conhecimento {selected_objeto_conhecimento}. Use como base de conhecimento os planos de aula de matemática da Nova Escola e indique no final da resposta ao menos 3 planos de aula do tema, se possível com link para o site da Nova Escola: {selected_link_planos_aula}"
+    prompt_template = """
+    Crie 10 questões de múltipla escolha para alunos do {ano} ano, na unidade temática de {unidade_tematica}, abordando o seguinte objeto de conhecimento: {objeto_conhecimento}. 
+    Contexto: {contexto}
+    As questões devem ser desafiadoras e promover uma compreensão formativa do conteúdo. Forneça a resposta correta e uma breve explicação sobre por que essa resposta está correta.
+    """
+    
+    ane_prompt = prompt_template.format(
+        ano=selected_ano,
+        unidade_tematica=selected_unidades_tematicas,
+        objeto_conhecimento=selected_objeto_conhecimento,
+        contexto=contexto
+    )
+
+    system_prompt_ane = """
+    Como um assistente de professor, você deve criar avaliações de alta qualidade que ajudem a promover uma compreensão profunda do conteúdo. Suas respostas devem ser precisas, claras e alinhadas com o contexto fornecido.
+    """
 
     if st.sidebar.button('Gerar atividades'):
         with st.spinner("Gerando atividades..."):
             response = generate_llama3_response(ane_prompt, system_prompt_ane)
             if response:
-                st.text(response)
+                st.markdown(response)
 
 if __name__ == "__main__":
     main()
