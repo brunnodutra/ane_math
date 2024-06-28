@@ -128,7 +128,7 @@ def main():
     1. **Identifique os coeficientes:** \\(a = 1\\), \\(b = -5\\), \\(c = 6\\).
     2. **Calcule o discriminante (Δ):** \\(\\Delta = b^2 - 4ac = (-5)^2 - 4(1)(6) = 25 - 24 = 1\\).
     3. **Calcule as raízes usando a fórmula de Bhaskara:**  
-       \\(x = \\frac{{-b \\pm \\sqrt{\\Delta}}}{2a}\\)
+       \\(x = \\frac{{-b \\pm \\sqrt{{\\Delta}}}}{2a}\\)
     4. **Calcule a primeira raiz (x₁):**  
        \\(x₁ = \\frac{{-(-5) + \\sqrt{1}}}{2(1)} = \\frac{5 + 1}{2} = \\frac{6}{2} = 3\\)
     5. **Calcule a segunda raiz (x₂):**  
