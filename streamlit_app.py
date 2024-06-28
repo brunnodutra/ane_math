@@ -60,12 +60,6 @@ def main():
     
     contexto = st.sidebar.text_area("Descreva o contexto para as questões")
 
-    # Debugging output
-    st.write("Selected Year:", selected_ano)
-    st.write("Selected Thematic Units:", selected_unidades_tematicas)
-    st.write("Selected Knowledge Object:", selected_objeto_conhecimento)
-    st.write("Context:", contexto)
-
     prompt_template = """
     Tarefa 1 - Geração de Questão de Matemática:
     "Por favor, gere uma questão de matemática de múltipla escolha para alunos do {ano} ano, focada em {unidade_tematica}, que explore {objeto_conhecimento}. A questão deve incluir uma introdução contextual para ajudar os alunos a entenderem o problema. Proporcione quatro alternativas plausíveis, uma das quais deve ser a resposta correta. Inclua parâmetros variáveis para permitir ajustes na dificuldade da questão. Use a seguinte estrutura:
@@ -106,7 +100,6 @@ def main():
             objeto_conhecimento=selected_objeto_conhecimento,
             contexto=contexto
         )
-        st.write("Generated Prompt:", ane_prompt)
     except KeyError as e:
         st.error(f"Erro ao formatar o prompt: variável {e} não encontrada. Verifique se todas as variáveis estão definidas corretamente.")
         return
