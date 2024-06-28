@@ -93,61 +93,6 @@ def main():
     1. Erro Comum: [Descreva o erro que o estudante cometeu]
     2. Correção: [Explique a correção do erro]
     3. Dicas: [Forneça dicas práticas para evitar esse tipo de erro no futuro]"
-
-    Considerações:
-    - Forneça uma breve introdução ou contexto para cada questão.
-    - As alternativas devem ser plausíveis e desafiadoras.
-    - Inclua a resposta correta e uma breve explicação sobre por que essa resposta está correta.
-    - Certifique-se de que as questões estão alinhadas com o conteúdo esperado para o {ano} ano.
-    - Use formatação clara e consistente para apresentar as questões e respostas.
-
-    ### Instruções Avançadas:
-    1. Utilize linguagem de alta precisão e evite ambiguidades.
-    2. Certifique-se de que cada passo na solução é lógico e sequencial.
-    3. Ao criar alternativas, inclua erros comuns que os estudantes possam cometer para testá-los de forma mais eficaz.
-    4. Na explicação da resposta correta, forneça insights sobre por que as outras alternativas estão erradas.
-    5. Use formatação Markdown para organizar as perguntas e respostas de maneira clara e legível.
-
-    ### Exemplos de Questões e Soluções:
-
-    #### Exemplo de Questão:
-    **Questão:** 
-    Resolva a equação do segundo grau: \\(x^2 - 5x + 6 = 0\\). Quais são as soluções para \\(x\\)?
-
-    **Alternativas:**
-    A) \\(x = 2\\) e \\(x = 3\\)  
-    B) \\(x = 1\\) e \\(x = 6\\)  
-    C) \\(x = -2\\) e \\(x = -3\\)  
-    D) \\(x = 0\\) e \\(x = 5\\)
-
-    **Resposta Correta:** 
-    A) \\(x = 2\\) e \\(x = 3\\)
-
-    #### Exemplo de Solução Detalhada:
-    **Solução:**
-    1. **Identifique os coeficientes:** \\(a = 1\\), \\(b = -5\\), \\(c = 6\\).
-    2. **Calcule o discriminante (\\(\\Delta\\)):** \\(\\Delta = b^2 - 4ac = (-5)^2 - 4(1)(6) = 25 - 24 = 1\\).
-    3. **Calcule as raízes usando a fórmula de Bhaskara:**  
-       \\(x = \\frac{{-b \\pm \\sqrt{{\\Delta}}}}{2a}\\)
-    4. **Calcule a primeira raiz (\\(x_1\\)):**  
-       \\(x_1 = \\frac{{-(-5) + \\sqrt{1}}}{2(1)} = \\frac{5 + 1}{2} = \\frac{6}{2} = 3\\)
-    5. **Calcule a segunda raiz (\\(x_2\\)):**  
-       \\(x_2 = \\frac{{-(-5) - \\sqrt{1}}}{2(1)} = \\frac{5 - 1}{2} = \\frac{4}{2} = 2\\)
-
-    Portanto, as soluções para a equação \\(x^2 - 5x + 6 = 0\\) são \\(x = 2\\) e \\(x = 3\\).
-
-    #### Exemplo de Feedback Personalizado:
-    **Erro Comum:**
-    O estudante calculou o discriminante (\\(\\Delta\\)) como \\(b^2 - 4ac = (-5)^2 + 4(1)(6) = 25 + 24 = 49\\), em vez de \\(25 - 24 = 1\\).
-
-    **Correção:**
-    Explique ao estudante que a fórmula correta é \\(b^2 - 4ac\\), onde a subtração é crucial. Portanto, a correção seria:
-    \\[
-    \\Delta = (-5)^2 - 4(1)(6) = 25 - 24 = 1
-    \\]
-
-    **Dicas:**
-    Para evitar esse tipo de erro no futuro, sempre escreva a fórmula completa e substitua os valores com cuidado, prestando atenção aos sinais. Praticar mais problemas de equações quadráticas pode ajudar a familiarizar-se com o processo.
     """
 
     # Ensure context is not empty to avoid formatting issues
