@@ -67,7 +67,7 @@ def generate_llama3_response(prompt_input, system_prompt_ane):
             full_response += item
         return full_response
     except replicate.exceptions.ReplicateError as e:
-        st.error(translate_text("Erro ao gerar resposta", lang_code) + f": {str(e)}")
+        st.error(translate_text("Erro ao gerar resposta", language) + f": {str(e)}")
         return None
 
 def main():
