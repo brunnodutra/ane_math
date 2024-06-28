@@ -34,12 +34,10 @@ def main():
     st.sidebar.title("Gerador de Avaliações")
     st.sidebar.subheader("Selecione as opções para gerar a avaliação")
 
-    options_ano = ['6° ano', '7° ano', '8° ano', '9° ano']
+    options_ano = ['6° ano', '7° ano']
     unidades_tematicas = {
         '6° ano': ['Números e operações', 'Álgebra', 'Geometria', 'Grandezas e medidas', 'Probabilidade e estatística'],
-        '7° ano': ['Números e operações', 'Álgebra', 'Geometria', 'Grandezas e medidas', 'Probabilidade e estatística'],
-        '8° ano': ['Números e operações', 'Álgebra', 'Geometria', 'Grandezas e medidas', 'Probabilidade e estatística'],
-        '9° ano': ['Números e operações', 'Álgebra', 'Geometria', 'Grandezas e medidas', 'Probabilidade e estatística'],
+        '7° ano': ['Números e operações', 'Álgebra', 'Geometria', 'Grandezas e medidas', 'Probabilidade e estatística']
     }
 
     objetos_conhecimento = {
@@ -52,16 +50,7 @@ def main():
         '7° ano-Álgebra': ['Equações do 2º grau', 'Funções'],
         '7° ano-Geometria': ['Áreas de figuras planas', 'Teorema de Pitágoras'],
         '7° ano-Grandezas e medidas': ['Medidas de área', 'Medidas de volume'],
-        '7° ano-Probabilidade e estatística': ['Probabilidade simples', 'Distribuição de frequência'],
-        '8° ano-Números e operações': ['Números irracionais', 'Radiciação'],
-        '8° ano-Álgebra': ['Polinômios', 'Sistema de equações lineares'],
-        '8° ano-Geometria': ['Ângulos', 'Transformações geométricas'],
-        '8° ano-Grandezas e medidas': ['Medidas de tempo', 'Escalas'],
-        '8° ano-Probabilidade e estatística': ['Análise combinatória', 'Interpretação de dados'],
-        '9° ano-Números e operações': ['Potenciação', 'Logaritmos'],
-        '9° ano-Álgebra': ['Funções exponenciais', 'Progressões aritméticas'],
-        '9° ano-Geometria': ['Relações entre arcos e ângulos na circunferência de um círculo', 'Semelhança de triângulos'],
-        '9° ano-Grandezas e medidas': ['Unidades de medida utilizadas na informática', 'Volume de prismas e cilindros'],
+        '7° ano-Probabilidade e estatística': ['Probabilidade simples', 'Distribuição de frequência']
     }
 
     selected_ano = st.sidebar.selectbox("Ano", options_ano)
