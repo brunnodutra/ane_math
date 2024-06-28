@@ -19,22 +19,34 @@ def translate_text(text, language):
             "Erro ao formatar o prompt": "Error formatting prompt",
             "variable not found": "variable not found",
             "check if all variables are defined correctly": "check if all variables are defined correctly",
-            "error in formatting prompt": "error in formatting prompt"
-        },
-        'pt': {
-            "Gerador de Avaliações": "Gerador de Avaliações",
-            "Selecione as opções para gerar a avaliação": "Selecione as opções para gerar a avaliação",
-            "Ano": "Ano",
-            "Unidades temáticas": "Unidades temáticas",
-            "Objetos de conhecimento": "Objetos de conhecimento",
-            "Descreva o contexto para as questões": "Descreva o contexto para as questões",
-            "Gerar atividades": "Gerar atividades",
-            "Gerando atividades...": "Gerando atividades...",
-            "Erro ao gerar resposta": "Erro ao gerar resposta",
-            "Erro ao formatar o prompt": "Erro ao formatar o prompt",
-            "variable not found": "variável não encontrada",
-            "check if all variables are defined correctly": "verifique se todas as variáveis estão definidas corretamente",
-            "error in formatting prompt": "erro de formatação do prompt"
+            "error in formatting prompt": "error in formatting prompt",
+            "Sem contexto adicional.": "No additional context.",
+            "Como um assistente de professor, você deve criar avaliações de alta qualidade que ajudem a promover uma compreensão profunda do conteúdo. Suas respostas devem ser precisas, claras e alinhadas com o contexto fornecido. Utilize formatação Markdown para organizar as perguntas e respostas.": 
+            "As a teaching assistant, you must create high-quality assessments that help promote a deep understanding of the content. Your answers must be accurate, clear, and aligned with the provided context. Use Markdown formatting to organize questions and answers.",
+            "Tarefa 1 - Geração de Questão de Matemática:": "Task 1 - Generation of Math Question:",
+            "Por favor, gere uma questão de matemática de múltipla escolha para alunos do {ano} ano, focada em {unidade_tematica}, que explore {objeto_conhecimento}. A questão deve incluir uma introdução contextual para ajudar os alunos a entenderem o problema. Proporcione quatro alternativas plausíveis, uma das quais deve ser a resposta correta. Inclua parâmetros variáveis para permitir ajustes na dificuldade da questão. Use a seguinte estrutura:": 
+            "Please generate a multiple-choice math question for {ano} grade students, focused on {unidade_tematica}, that explores {objeto_conhecimento}. The question should include a contextual introduction to help students understand the problem. Provide four plausible alternatives, one of which should be the correct answer. Include variable parameters to allow adjustments in the difficulty of the question. Use the following structure:",
+            "1. Introdução/Contexto: [Forneça um cenário breve e claro relacionado à questão]": "1. Introduction/Context: [Provide a brief and clear scenario related to the question]",
+            "2. Enunciado da Questão: [Descreva a questão matemática]": "2. Question Statement: [Describe the math question]",
+            "3. Alternativas:": "3. Alternatives:",
+            "A) [Alternativa 1]": "A) [Alternative 1]",
+            "B) [Alternativa 2]": "B) [Alternative 2]",
+            "C) [Alternativa 3]": "C) [Alternative 3]",
+            "D) [Alternativa 4]": "D) [Alternative 4]",
+            "4. Resposta Correta: [Indique a alternativa correta]": "4. Correct Answer: [Indicate the correct alternative]",
+            "Tarefa 2 - Solução Detalhada:": "Task 2 - Detailed Solution:",
+            "Para a questão gerada anteriormente, forneça uma solução detalhada passo a passo, explicando cada etapa do processo de resolução da questão. Use uma linguagem clara e acessível para estudantes do {ano} ano. Siga a estrutura abaixo:": 
+            "For the previously generated question, provide a detailed step-by-step solution, explaining each stage of the problem-solving process. Use clear and accessible language for {ano} grade students. Follow the structure below:",
+            "1. Passo 1: [Descrição da primeira etapa]": "1. Step 1: [Description of the first step]",
+            "2. Passo 2: [Descrição da segunda etapa]": "2. Step 2: [Description of the second step]",
+            "3. Passo 3: [Descrição da terceira etapa, se aplicável]": "3. Step 3: [Description of the third step, if applicable]",
+            "4. Resumo: [Resumo do processo e resultado final]": "4. Summary: [Summary of the process and final result]",
+            "Tarefa 3 - Feedback Personalizado:": "Task 3 - Personalized Feedback:",
+            "Baseado em uma resposta hipotética de um estudante que cometeu um erro comum ao resolver a questão, forneça feedback construtivo. Explique o erro, sua correção e forneça dicas para evitar esse tipo de engano no futuro. Use a seguinte estrutura:": 
+            "Based on a hypothetical student's response that made a common error while solving the question, provide constructive feedback. Explain the error, its correction, and give tips to avoid this type of mistake in the future. Use the following structure:",
+            "1. Erro Comum: [Descreva o erro que o estudante cometeu]": "1. Common Error: [Describe the error the student made]",
+            "2. Correção: [Explique a correção do erro]": "2. Correction: [Explain the correction of the error]",
+            "3. Dicas: [Forneça dicas práticas para evitar esse tipo de erro no futuro]": "3. Tips: [Provide practical tips to avoid this type of error in the future]"
         }
     }
     return translations[language].get(text, text)
@@ -55,7 +67,7 @@ def generate_llama3_response(prompt_input, system_prompt_ane):
             full_response += item
         return full_response
     except replicate.exceptions.ReplicateError as e:
-        st.error(translate_text("Erro ao gerar resposta", language) + f": {str(e)}")
+        st.error(translate_text("Erro ao gerar resposta", lang_code) + f": {str(e)}")
         return None
 
 def main():
@@ -63,7 +75,7 @@ def main():
         replicate_api = st.secrets['REPLICATE_API_TOKEN']
         os.environ['REPLICATE_API_TOKEN'] = replicate_api
     except KeyError:
-        st.error(translate_text("Replicate API token não encontrado. Adicione o token ao arquivo secrets.toml.", language))
+        st.error(translate_text("Replicate API token não encontrado. Adicione o token ao arquivo secrets.toml.", lang_code))
         return
 
     language = st.sidebar.selectbox("Language / Idioma", ["Português", "English"])
@@ -112,7 +124,7 @@ def main():
     
     contexto = st.sidebar.text_area(translate_text("Descreva o contexto para as questões", lang_code))
 
-    prompt_template = """
+    prompt_template_pt = """
     Tarefa 1 - Geração de Questão de Matemática:
     "Por favor, gere uma questão de matemática de múltipla escolha para alunos do {ano} ano, focada em {unidade_tematica}, que explore {objeto_conhecimento}. A questão deve incluir uma introdução contextual para ajudar os alunos a entenderem o problema. Proporcione quatro alternativas plausíveis, uma das quais deve ser a resposta correta. Inclua parâmetros variáveis para permitir ajustes na dificuldade da questão. Use a seguinte estrutura:
 
@@ -140,6 +152,37 @@ def main():
     2. Correção: [Explique a correção do erro]
     3. Dicas: [Forneça dicas práticas para evitar esse tipo de erro no futuro]"
     """
+
+    prompt_template_en = """
+    Task 1 - Generation of Math Question:
+    "Please generate a multiple-choice math question for {ano} grade students, focused on {unidade_tematica}, that explores {objeto_conhecimento}. The question should include a contextual introduction to help students understand the problem. Provide four plausible alternatives, one of which should be the correct answer. Include variable parameters to allow adjustments in the difficulty of the question. Use the following structure:
+
+    1. Introduction/Context: [Provide a brief and clear scenario related to the question]
+    2. Question Statement: [Describe the math question]
+    3. Alternatives:
+       A) [Alternative 1]
+       B) [Alternative 2]
+       C) [Alternative 3]
+       D) [Alternative 4]
+    4. Correct Answer: [Indicate the correct alternative]"
+
+    Task 2 - Detailed Solution:
+    "For the previously generated question, provide a detailed step-by-step solution, explaining each stage of the problem-solving process. Use clear and accessible language for {ano} grade students. Follow the structure below:
+
+    1. Step 1: [Description of the first step]
+    2. Step 2: [Description of the second step]
+    3. Step 3: [Description of the third step, if applicable]
+    4. Summary: [Summary of the process and final result]"
+
+    Task 3 - Personalized Feedback:
+    "Based on a hypothetical student's response that made a common error while solving the question, provide constructive feedback. Explain the error, its correction, and give tips to avoid this type of mistake in the future. Use the following structure:
+
+    1. Common Error: [Describe the error the student made]
+    2. Correction: [Explain the correction of the error]
+    3. Tips: [Provide practical tips to avoid this type of error in the future]"
+    """
+
+    prompt_template = prompt_template_pt if lang_code == 'pt' else prompt_template_en
 
     # Ensure context is not empty to avoid formatting issues
     if not contexto:
