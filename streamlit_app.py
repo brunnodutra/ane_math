@@ -161,6 +161,10 @@ def main():
     Para evitar esse tipo de erro no futuro, sempre escreva a fórmula completa e substitua os valores com cuidado, prestando atenção aos sinais. Praticar mais problemas de equações quadráticas pode ajudar a familiarizar-se com o processo.
     """
 
+    # Ensure context is not empty to avoid formatting issues
+    if not contexto:
+        contexto = "Sem contexto adicional."
+
     try:
         ane_prompt = prompt_template.format(
             ano=selected_ano,
@@ -168,8 +172,12 @@ def main():
             objeto_conhecimento=selected_objeto_conhecimento,
             contexto=contexto
         )
+        st.write("Generated Prompt:", ane_prompt)
     except KeyError as e:
         st.error(f"Erro ao formatar o prompt: variável {e} não encontrada. Verifique se todas as variáveis estão definidas corretamente.")
+        return
+    except ValueError as ve:
+        st.error(f"Erro de formatação do prompt: {ve}")
         return
 
     system_prompt_ane = """
