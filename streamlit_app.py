@@ -4,6 +4,41 @@ import os
 
 st.set_page_config(page_title="Gerador de Avaliações de Matemática", layout="wide")
 
+def translate_text(text, language):
+    translations = {
+        'en': {
+            "Gerador de Avaliações": "Assessment Generator",
+            "Selecione as opções para gerar a avaliação": "Select options to generate the assessment",
+            "Ano": "Grade",
+            "Unidades temáticas": "Thematic Units",
+            "Objetos de conhecimento": "Knowledge Objects",
+            "Descreva o contexto para as questões": "Describe the context for the questions",
+            "Gerar atividades": "Generate Activities",
+            "Gerando atividades...": "Generating activities...",
+            "Erro ao gerar resposta": "Error generating response",
+            "Erro ao formatar o prompt": "Error formatting prompt",
+            "variable not found": "variable not found",
+            "check if all variables are defined correctly": "check if all variables are defined correctly",
+            "error in formatting prompt": "error in formatting prompt"
+        },
+        'pt': {
+            "Gerador de Avaliações": "Gerador de Avaliações",
+            "Selecione as opções para gerar a avaliação": "Selecione as opções para gerar a avaliação",
+            "Ano": "Ano",
+            "Unidades temáticas": "Unidades temáticas",
+            "Objetos de conhecimento": "Objetos de conhecimento",
+            "Descreva o contexto para as questões": "Descreva o contexto para as questões",
+            "Gerar atividades": "Gerar atividades",
+            "Gerando atividades...": "Gerando atividades...",
+            "Erro ao gerar resposta": "Erro ao gerar resposta",
+            "Erro ao formatar o prompt": "Erro ao formatar o prompt",
+            "variable not found": "variável não encontrada",
+            "check if all variables are defined correctly": "verifique se todas as variáveis estão definidas corretamente",
+            "error in formatting prompt": "erro de formatação do prompt"
+        }
+    }
+    return translations[language].get(text, text)
+
 def generate_llama3_response(prompt_input, system_prompt_ane):
     try:
         output = replicate.run(
@@ -20,7 +55,7 @@ def generate_llama3_response(prompt_input, system_prompt_ane):
             full_response += item
         return full_response
     except replicate.exceptions.ReplicateError as e:
-        st.error(f"Erro ao gerar resposta: {str(e)}")
+        st.error(translate_text("Erro ao gerar resposta", language) + f": {str(e)}")
         return None
 
 def main():
@@ -28,16 +63,22 @@ def main():
         replicate_api = st.secrets['REPLICATE_API_TOKEN']
         os.environ['REPLICATE_API_TOKEN'] = replicate_api
     except KeyError:
-        st.error("Replicate API token não encontrado. Adicione o token ao arquivo secrets.toml.")
+        st.error(translate_text("Replicate API token não encontrado. Adicione o token ao arquivo secrets.toml.", language))
         return
 
-    st.sidebar.title("Gerador de Avaliações")
-    st.sidebar.subheader("Selecione as opções para gerar a avaliação")
+    language = st.sidebar.selectbox("Language / Idioma", ["Português", "English"])
+    lang_code = 'pt' if language == "Português" else 'en'
 
-    options_ano = ['6° ano', '7° ano']
+    st.sidebar.title(translate_text("Gerador de Avaliações", lang_code))
+    st.sidebar.subheader(translate_text("Selecione as opções para gerar a avaliação", lang_code))
+
+    options_ano = ['6° ano', '7° ano'] if lang_code == 'pt' else ['6th grade', '7th grade']
     unidades_tematicas = {
         '6° ano': ['Números e operações', 'Álgebra', 'Geometria', 'Grandezas e medidas', 'Probabilidade e estatística'],
         '7° ano': ['Números e operações', 'Álgebra', 'Geometria', 'Grandezas e medidas', 'Probabilidade e estatística']
+    } if lang_code == 'pt' else {
+        '6th grade': ['Numbers and operations', 'Algebra', 'Geometry', 'Quantities and measures', 'Probability and statistics'],
+        '7th grade': ['Numbers and operations', 'Algebra', 'Geometry', 'Quantities and measures', 'Probability and statistics']
     }
 
     objetos_conhecimento = {
@@ -51,14 +92,25 @@ def main():
         '7° ano-Geometria': ['Áreas de figuras planas', 'Teorema de Pitágoras'],
         '7° ano-Grandezas e medidas': ['Medidas de área', 'Medidas de volume'],
         '7° ano-Probabilidade e estatística': ['Probabilidade simples', 'Distribuição de frequência']
+    } if lang_code == 'pt' else {
+        '6th grade-Numbers and operations': ['Addition and subtraction of natural numbers', 'Multiplication and division of natural numbers'],
+        '6th grade-Algebra': ['Algebraic expressions', 'First-degree equations'],
+        '6th grade-Geometry': ['Plane geometric figures', 'Geometric solids'],
+        '6th grade-Quantities and measures': ['Length measurements', 'Mass measurements'],
+        '6th grade-Probability and statistics': ['Random experiments', 'Graph reading and interpretation'],
+        '7th grade-Numbers and operations': ['Rational numbers', 'Operations with fractions'],
+        '7th grade-Algebra': ['Second-degree equations', 'Functions'],
+        '7th grade-Geometry': ['Area of plane figures', 'Pythagorean theorem'],
+        '7th grade-Quantities and measures': ['Area measurements', 'Volume measurements'],
+        '7th grade-Probability and statistics': ['Simple probability', 'Frequency distribution']
     }
 
-    selected_ano = st.sidebar.selectbox("Ano", options_ano)
-    selected_unidades_tematicas = st.sidebar.selectbox("Unidades temáticas", unidades_tematicas[selected_ano])
+    selected_ano = st.sidebar.selectbox(translate_text("Ano", lang_code), options_ano)
+    selected_unidades_tematicas = st.sidebar.selectbox(translate_text("Unidades temáticas", lang_code), unidades_tematicas[selected_ano])
     index_objeto_conhecimento = f"{selected_ano}-{selected_unidades_tematicas}"
-    selected_objeto_conhecimento = st.sidebar.selectbox("Objetos de conhecimento", objetos_conhecimento[index_objeto_conhecimento])
+    selected_objeto_conhecimento = st.sidebar.selectbox(translate_text("Objetos de conhecimento", lang_code), objetos_conhecimento[index_objeto_conhecimento])
     
-    contexto = st.sidebar.text_area("Descreva o contexto para as questões")
+    contexto = st.sidebar.text_area(translate_text("Descreva o contexto para as questões", lang_code))
 
     prompt_template = """
     Tarefa 1 - Geração de Questão de Matemática:
@@ -91,7 +143,7 @@ def main():
 
     # Ensure context is not empty to avoid formatting issues
     if not contexto:
-        contexto = "Sem contexto adicional."
+        contexto = translate_text("Sem contexto adicional.", lang_code)
 
     try:
         ane_prompt = prompt_template.format(
@@ -101,18 +153,18 @@ def main():
             contexto=contexto
         )
     except KeyError as e:
-        st.error(f"Erro ao formatar o prompt: variável {e} não encontrada. Verifique se todas as variáveis estão definidas corretamente.")
+        st.error(translate_text("Erro ao formatar o prompt", lang_code) + f": {e}. " + translate_text("variable not found", lang_code) + ". " + translate_text("check if all variables are defined correctly", lang_code))
         return
     except ValueError as ve:
-        st.error(f"Erro de formatação do prompt: {ve}")
+        st.error(translate_text("Erro de formatação do prompt", lang_code) + f": {ve}")
         return
 
-    system_prompt_ane = """
+    system_prompt_ane = translate_text("""
     Como um assistente de professor, você deve criar avaliações de alta qualidade que ajudem a promover uma compreensão profunda do conteúdo. Suas respostas devem ser precisas, claras e alinhadas com o contexto fornecido. Utilize formatação Markdown para organizar as perguntas e respostas.
-    """
+    """, lang_code)
 
-    if st.sidebar.button('Gerar atividades'):
-        with st.spinner("Gerando atividades..."):
+    if st.sidebar.button(translate_text("Gerar atividades", lang_code)):
+        with st.spinner(translate_text("Gerando atividades...", lang_code)):
             response = generate_llama3_response(ane_prompt, system_prompt_ane)
             if response:
                 st.markdown(response)
