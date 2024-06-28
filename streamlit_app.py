@@ -126,19 +126,19 @@ def main():
     #### Exemplo de Solução Detalhada:
     **Solução:**
     1. **Identifique os coeficientes:** \\(a = 1\\), \\(b = -5\\), \\(c = 6\\).
-    2. **Calcule o discriminante (Δ):** \\(\\Delta = b^2 - 4ac = (-5)^2 - 4(1)(6) = 25 - 24 = 1\\).
+    2. **Calcule o discriminante (\\(\\Delta\\)):** \\(\\Delta = b^2 - 4ac = (-5)^2 - 4(1)(6) = 25 - 24 = 1\\).
     3. **Calcule as raízes usando a fórmula de Bhaskara:**  
        \\(x = \\frac{{-b \\pm \\sqrt{{\\Delta}}}}{2a}\\)
-    4. **Calcule a primeira raiz (x₁):**  
-       \\(x₁ = \\frac{{-(-5) + \\sqrt{1}}}{2(1)} = \\frac{5 + 1}{2} = \\frac{6}{2} = 3\\)
-    5. **Calcule a segunda raiz (x₂):**  
-       \\(x₂ = \\frac{{-(-5) - \\sqrt{1}}}{2(1)} = \\frac{5 - 1}{2} = \\frac{4}{2} = 2\\)
+    4. **Calcule a primeira raiz (\\(x_1\\)):**  
+       \\(x_1 = \\frac{{-(-5) + \\sqrt{1}}}{2(1)} = \\frac{5 + 1}{2} = \\frac{6}{2} = 3\\)
+    5. **Calcule a segunda raiz (\\(x_2\\)):**  
+       \\(x_2 = \\frac{{-(-5) - \\sqrt{1}}}{2(1)} = \\frac{5 - 1}{2} = \\frac{4}{2} = 2\\)
 
     Portanto, as soluções para a equação \\(x^2 - 5x + 6 = 0\\) são \\(x = 2\\) e \\(x = 3\\).
 
     #### Exemplo de Feedback Personalizado:
     **Erro Comum:**
-    O estudante calculou o discriminante (Δ) como \\(b^2 - 4ac = (-5)^2 + 4(1)(6) = 25 + 24 = 49\\), em vez de \\(25 - 24 = 1\\).
+    O estudante calculou o discriminante (\\(\\Delta\\)) como \\(b^2 - 4ac = (-5)^2 + 4(1)(6) = 25 + 24 = 49\\), em vez de \\(25 - 24 = 1\\).
 
     **Correção:**
     Explique ao estudante que a fórmula correta é \\(b^2 - 4ac\\), onde a subtração é crucial. Portanto, a correção seria:
