@@ -75,7 +75,7 @@ def main():
         replicate_api = st.secrets['REPLICATE_API_TOKEN']
         os.environ['REPLICATE_API_TOKEN'] = replicate_api
     except KeyError:
-        st.error(translate_text("Replicate API token não encontrado. Adicione o token ao arquivo secrets.toml.", lang_code))
+        st.error("Replicate API token não encontrado. Adicione o token ao arquivo secrets.toml.")
         return
 
     language = st.sidebar.selectbox("Language / Idioma", ["Português", "English"])
