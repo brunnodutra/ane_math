@@ -73,13 +73,31 @@ def main():
 
     prompt_template = """
     Tarefa 1 - Geração de Questão de Matemática:
-    "Por favor, gere uma questão de matemática para alunos do {ano} ano, focada em {unidade_tematica}, que explore {objeto_conhecimento}. Inclua parâmetros variáveis para permitir ajustes na dificuldade da questão."
+    "Por favor, gere uma questão de matemática de múltipla escolha para alunos do {ano} ano, focada em {unidade_tematica}, que explore {objeto_conhecimento}. A questão deve incluir uma introdução contextual para ajudar os alunos a entenderem o problema. Proporcione quatro alternativas plausíveis, uma das quais deve ser a resposta correta. Inclua parâmetros variáveis para permitir ajustes na dificuldade da questão. Use a seguinte estrutura:
+
+    1. Introdução/Contexto: [Forneça um cenário breve e claro relacionado à questão]
+    2. Enunciado da Questão: [Descreva a questão matemática]
+    3. Alternativas:
+       A) [Alternativa 1]
+       B) [Alternativa 2]
+       C) [Alternativa 3]
+       D) [Alternativa 4]
+    4. Resposta Correta: [Indique a alternativa correta]"
 
     Tarefa 2 - Solução Detalhada:
-    "Para a questão gerada anteriormente, forneça uma solução detalhada passo a passo, explicando cada etapa do processo de resolução da questão. Use uma linguagem clara e acessível para estudantes do {ano} ano."
+    "Para a questão gerada anteriormente, forneça uma solução detalhada passo a passo, explicando cada etapa do processo de resolução da questão. Use uma linguagem clara e acessível para estudantes do {ano} ano. Siga a estrutura abaixo:
+
+    1. Passo 1: [Descrição da primeira etapa]
+    2. Passo 2: [Descrição da segunda etapa]
+    3. Passo 3: [Descrição da terceira etapa, se aplicável]
+    4. Resumo: [Resumo do processo e resultado final]"
 
     Tarefa 3 - Feedback Personalizado:
-    "Baseado em uma resposta hipotética de um estudante que cometeu um erro comum ao resolver a questão, forneça feedback construtivo. Explique o erro, sua correção e forneça dicas para evitar esse tipo de engano no futuro."
+    "Baseado em uma resposta hipotética de um estudante que cometeu um erro comum ao resolver a questão, forneça feedback construtivo. Explique o erro, sua correção e forneça dicas para evitar esse tipo de engano no futuro. Use a seguinte estrutura:
+
+    1. Erro Comum: [Descreva o erro que o estudante cometeu]
+    2. Correção: [Explique a correção do erro]
+    3. Dicas: [Forneça dicas práticas para evitar esse tipo de erro no futuro]"
 
     Considerações:
     - Forneça uma breve introdução ou contexto para cada questão.
@@ -87,6 +105,54 @@ def main():
     - Inclua a resposta correta e uma breve explicação sobre por que essa resposta está correta.
     - Certifique-se de que as questões estão alinhadas com o conteúdo esperado para o {ano} ano.
     - Use formatação clara e consistente para apresentar as questões e respostas.
+
+    ### Instruções Avançadas:
+    1. Utilize linguagem de alta precisão e evite ambiguidades.
+    2. Certifique-se de que cada passo na solução é lógico e sequencial.
+    3. Ao criar alternativas, inclua erros comuns que os estudantes possam cometer para testá-los de forma mais eficaz.
+    4. Na explicação da resposta correta, forneça insights sobre por que as outras alternativas estão erradas.
+    5. Use formatação Markdown para organizar as perguntas e respostas de maneira clara e legível.
+
+    ### Exemplos de Questões e Soluções:
+
+    #### Exemplo de Questão:
+    **Questão:** 
+    Resolva a equação do segundo grau: \(x^2 - 5x + 6 = 0\). Quais são as soluções para \(x\)?
+
+    **Alternativas:**
+    A) \(x = 2\) e \(x = 3\)  
+    B) \(x = 1\) e \(x = 6\)  
+    C) \(x = -2\) e \(x = -3\)  
+    D) \(x = 0\) e \(x = 5\)
+
+    **Resposta Correta:** 
+    A) \(x = 2\) e \(x = 3\)
+
+    #### Exemplo de Solução Detalhada:
+    **Solução:**
+    1. **Identifique os coeficientes:** \(a = 1\), \(b = -5\), \(c = 6\).
+    2. **Calcule o discriminante (Δ):** \(\Delta = b^2 - 4ac = (-5)^2 - 4(1)(6) = 25 - 24 = 1\).
+    3. **Calcule as raízes usando a fórmula de Bhaskara:**  
+       \[x = \frac{-b \pm \sqrt{\Delta}}{2a}\]
+    4. **Calcule a primeira raiz (x₁):**  
+       \[x₁ = \frac{-(-5) + \sqrt{1}}{2(1)} = \frac{5 + 1}{2} = \frac{6}{2} = 3\]
+    5. **Calcule a segunda raiz (x₂):**  
+       \[x₂ = \frac{-(-5) - \sqrt{1}}{2(1)} = \frac{5 - 1}{2} = \frac{4}{2} = 2\]
+
+    Portanto, as soluções para a equação \(x^2 - 5x + 6 = 0\) são \(x = 2\) e \(x = 3\).
+
+    #### Exemplo de Feedback Personalizado:
+    **Erro Comum:**
+    O estudante calculou o discriminante (Δ) como \(b^2 - 4ac = (-5)^2 + 4(1)(6) = 25 + 24 = 49\), em vez de \(25 - 24 = 1\).
+
+    **Correção:**
+    Explique ao estudante que a fórmula correta é \(b^2 - 4ac\), onde a subtração é crucial. Portanto, a correção seria:
+    \[
+    \Delta = (-5)^2 - 4(1)(6) = 25 - 24 = 1
+    \]
+
+    **Dicas:**
+    Para evitar esse tipo de erro no futuro, sempre escreva a fórmula completa e substitua os valores com cuidado, prestando atenção aos sinais. Praticar mais problemas de equações quadráticas pode ajudar a familiarizar-se com o processo.
     """
 
     ane_prompt = prompt_template.format(
