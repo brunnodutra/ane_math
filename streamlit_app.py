@@ -47,6 +47,48 @@ def translate_text(text, language):
             "1. Erro Comum: [Descreva o erro que o estudante cometeu]": "1. Common Error: [Describe the error the student made]",
             "2. Correção: [Explique a correção do erro]": "2. Correction: [Explain the correction of the error]",
             "3. Dicas: [Forneça dicas práticas para evitar esse tipo de erro no futuro]": "3. Tips: [Provide practical tips to avoid this type of error in the future]"
+        },
+        'pt': {
+            "Gerador de Avaliações": "Gerador de Avaliações",
+            "Selecione as opções para gerar a avaliação": "Selecione as opções para gerar a avaliação",
+            "Ano": "Ano",
+            "Unidades temáticas": "Unidades temáticas",
+            "Objetos de conhecimento": "Objetos de conhecimento",
+            "Descreva o contexto para as questões": "Descreva o contexto para as questões",
+            "Gerar atividades": "Gerar atividades",
+            "Gerando atividades...": "Gerando atividades...",
+            "Erro ao gerar resposta": "Erro ao gerar resposta",
+            "Erro ao formatar o prompt": "Erro ao formatar o prompt",
+            "variable not found": "variável não encontrada",
+            "check if all variables are defined correctly": "verifique se todas as variáveis estão definidas corretamente",
+            "error in formatting prompt": "erro de formatação do prompt",
+            "Sem contexto adicional.": "Sem contexto adicional.",
+            "Como um assistente de professor, você deve criar avaliações de alta qualidade que ajudem a promover uma compreensão profunda do conteúdo. Suas respostas devem ser precisas, claras e alinhadas com o contexto fornecido. Utilize formatação Markdown para organizar as perguntas e respostas.": 
+            "Como um assistente de professor, você deve criar avaliações de alta qualidade que ajudem a promover uma compreensão profunda do conteúdo. Suas respostas devem ser precisas, claras e alinhadas com o contexto fornecido. Utilize formatação Markdown para organizar as perguntas e respostas.",
+            "Tarefa 1 - Geração de Questão de Matemática:": "Tarefa 1 - Geração de Questão de Matemática:",
+            "Por favor, gere uma questão de matemática de múltipla escolha para alunos do {ano} ano, focada em {unidade_tematica}, que explore {objeto_conhecimento}. A questão deve incluir uma introdução contextual para ajudar os alunos a entenderem o problema. Proporcione quatro alternativas plausíveis, uma das quais deve ser a resposta correta. Inclua parâmetros variáveis para permitir ajustes na dificuldade da questão. Use a seguinte estrutura:": 
+            "Por favor, gere uma questão de matemática de múltipla escolha para alunos do {ano} ano, focada em {unidade_tematica}, que explore {objeto_conhecimento}. A questão deve incluir uma introdução contextual para ajudar os alunos a entenderem o problema. Proporcione quatro alternativas plausíveis, uma das quais deve ser a resposta correta. Inclua parâmetros variáveis para permitir ajustes na dificuldade da questão. Use a seguinte estrutura:",
+            "1. Introdução/Contexto: [Forneça um cenário breve e claro relacionado à questão]": "1. Introdução/Contexto: [Forneça um cenário breve e claro relacionado à questão]",
+            "2. Enunciado da Questão: [Descreva a questão matemática]": "2. Enunciado da Questão: [Descreva a questão matemática]",
+            "3. Alternativas:": "3. Alternativas:",
+            "A) [Alternativa 1]": "A) [Alternativa 1]",
+            "B) [Alternativa 2]": "B) [Alternativa 2]",
+            "C) [Alternativa 3]": "C) [Alternativa 3]",
+            "D) [Alternativa 4]": "D) [Alternativa 4]",
+            "4. Resposta Correta: [Indique a alternativa correta]": "4. Resposta Correta: [Indique a alternativa correta]",
+            "Tarefa 2 - Solução Detalhada:": "Tarefa 2 - Solução Detalhada:",
+            "Para a questão gerada anteriormente, forneça uma solução detalhada passo a passo, explicando cada etapa do processo de resolução da questão. Use uma linguagem clara e acessível para estudantes do {ano} ano. Siga a estrutura abaixo:": 
+            "Para a questão gerada anteriormente, forneça uma solução detalhada passo a passo, explicando cada etapa do processo de resolução da questão. Use uma linguagem clara e acessível para estudantes do {ano} ano. Siga a estrutura abaixo:",
+            "1. Passo 1: [Descrição da primeira etapa]": "1. Passo 1: [Descrição da primeira etapa]",
+            "2. Passo 2: [Descrição da segunda etapa]": "2. Passo 2: [Descrição da segunda etapa]",
+            "3. Passo 3: [Descrição da terceira etapa, se aplicável]": "3. Passo 3: [Descrição da terceira etapa, se aplicável]",
+            "4. Resumo: [Resumo do processo e resultado final]": "4. Resumo: [Resumo do processo e resultado final]",
+            "Tarefa 3 - Feedback Personalizado:": "Tarefa 3 - Feedback Personalizado:",
+            "Baseado em uma resposta hipotética de um estudante que cometeu um erro comum ao resolver a questão, forneça feedback construtivo. Explique o erro, sua correção e forneça dicas para evitar esse tipo de engano no futuro. Use a seguinte estrutura:": 
+            "Baseado em uma resposta hipotética de um estudante que cometeu um erro comum ao resolver a questão, forneça feedback construtivo. Explique o erro, sua correção e forneça dicas para evitar esse tipo de engano no futuro. Use a seguinte estrutura:",
+            "1. Erro Comum: [Descreva o erro que o estudante cometeu]": "1. Erro Comum: [Descreva o erro que o estudante cometeu]",
+            "2. Correção: [Explique a correção do erro]": "2. Correção: [Explique a correção do erro]",
+            "3. Dicas: [Forneça dicas práticas para evitar esse tipo de erro no futuro]": "3. Dicas: [Forneça dicas práticas para evitar esse tipo de erro no futuro]"
         }
     }
     return translations[language].get(text, text)
