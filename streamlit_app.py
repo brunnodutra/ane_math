@@ -114,7 +114,7 @@ def generate_llama3_response(prompt_input, system_prompt_ane):
 
 def main():
     try:
-        replicate_api = "r8_bHRnOE2UuWRiN6nefEaYRel4k58BJo31LImg2"
+        replicate_api = st.secrets['REPLICATE_API_TOKEN']
         os.environ['REPLICATE_API_TOKEN'] = replicate_api
     except KeyError:
         st.error("Replicate API token não encontrado. Adicione o token ao arquivo secrets.toml.")
